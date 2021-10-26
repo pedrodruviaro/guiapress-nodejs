@@ -1,0 +1,20 @@
+{
+    "name": "secao_07-projeto02",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "node-dev .",
+        "start": "node ."
+    },
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "mysql2": "^2.3.2",
+        "sequelize": "^6.8.0"
+    },
+    "devDependencies": {
+        "node-dev": "^7.1.0"
+    }
+}
