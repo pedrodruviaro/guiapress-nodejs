@@ -24,4 +24,14 @@ router.post("/categories/save", async (req, res) => {
     }
 });
 
+router.get("/admin/categories", async (req, res) => {
+    try {
+        const categories = await Category.findAll();
+
+        return res.render("admin/categories/index", { categories });
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
 module.exports = router;
