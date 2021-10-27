@@ -20,7 +20,7 @@ router.post("/categories/save", async (req, res) => {
             title,
             slug: slugify(title),
         });
-        return res.redirect("/");
+        return res.redirect("/admin/categories");
     } catch (error) {
         return res.status(500).json(error);
     }
@@ -52,6 +52,23 @@ router.post("/categories/delete", async (req, res) => {
     });
 
     return res.redirect("/admin/categories");
+});
+
+// editando uma categoria
+router.get("/admin/categories/edit/:id", async (req, res) => {
+    const id = req.params.id;
+
+    if (isNaN(id)) return res.redirect("/admin/categories");
+
+    try {
+        const category = await Category.findByPk(id);
+
+        if (!category) return res.redirect("/admin/categories");
+
+        return res.render("admin/categories/edit.ejs", { category });
+    } catch (error) {
+        return res.status(500).json(error);
+    }
 });
 
 module.exports = router;
