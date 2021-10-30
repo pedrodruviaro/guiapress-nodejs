@@ -6,7 +6,10 @@ const slugify = require("slugify");
 // pagina de artigos
 router.get("/admin/articles", async (req, res) => {
     try {
-        const articles = await Article.findAll();
+        // joim con sequelize => inclua os dados do tipo "category". Faz isso pelo relacionamento entre categorias
+        const articles = await Article.findAll({
+            include: [{ model: Category }],
+        });
 
         return res.render("admin/articles/index", { articles });
     } catch (err) {
@@ -42,6 +45,23 @@ router.post("/artcicles/save", async (req, res) => {
     } catch (error) {
         return res.redirect("/admin/articles");
     }
+});
+
+// Deletando um artigo
+router.post("/articles/delete", async (req, res) => {
+    const id = req.body.id;
+
+    if (id == undefined || isNaN(id)) {
+        return res.status(400).redirect("/admin/articles");
+    }
+
+    await Article.destroy({
+        where: {
+            id: id,
+        },
+    });
+
+    return res.redirect("/admin/articles");
 });
 
 module.exports = router;

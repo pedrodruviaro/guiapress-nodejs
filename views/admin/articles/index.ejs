@@ -24,8 +24,13 @@
                             <td><%= article.id %></td>
                             <td><%= article.title %></td>
                             <td><%= article.slug %></td>
-                            <td><%= article.categoryId %></td>
-                            <td>Ações</td>
+                            <td><%= article.category.title %></td>
+                            <td>
+                                <form onsubmit="confirmDelete(event)" action="/articles/delete" method="POST" style="display: inline;">
+                                    <input type="hidden" name="id" value="<%= article.id %>">
+                                    <button class="btn btn-danger">Deletar</button>
+                                </form>
+                            </td>
                         </tr>
 
                     <% }) %> 
@@ -40,7 +45,7 @@
     <script>
         function confirmDelete(event){
             event.preventDefault();
-            const value = confirm("Você realmente quer deletar esta categoria?")
+            const value = confirm("Você realmente quer deletar este artigo?")
             if(value){
                 event.target.submit()
             } else {

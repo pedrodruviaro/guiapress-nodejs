@@ -31,6 +31,16 @@ connection
     .catch((err) => console.error(err));
 
 // routes
+app.get("/", async (req, res) => {
+    try {
+        const articles = await Article.findAll();
+
+        res.render("index", { articles });
+    } catch (err) {
+        return res.redirect("index");
+    }
+});
+
 app.use(categoriesController);
 app.use(articlesController);
 
