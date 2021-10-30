@@ -3,12 +3,6 @@
     <body>
         <%- include('./partials/home-navbar.ejs')  %> 
         <div class="container mt-3">
-            <div class="jumbotron">
-                <h1 class="display-4">Bem vindo!</h1>
-                <p class="lead">Este é um simples blog para documentar a jornada dentro da programação!</p>
-                <a class="btn btn-primary btn-lg" href="/" role="button">Saiba mais</a>
-              </div>
-            <% articles.forEach(article => { %>
                 <div class="card mb-3">
                     <div class="card-header">
                         <h2>
@@ -16,10 +10,9 @@
                         </h2> 
                     </div>
                     <div class="card-body">
-                        <a href="/<%= article.slug %>" class="btn btn-primary">Ler Artigo</a>
+                        <%- article.body %> 
                     </div>
                 </div>
-            <% }) %> 
         </div>
     </body>
 

@@ -31,13 +31,34 @@ connection
     .catch((err) => console.error(err));
 
 // routes
+
+// HOME PAGE
 app.get("/", async (req, res) => {
     try {
-        const articles = await Article.findAll();
+        const articles = await Article.findAll({ order: [["id", "DESC"]] });
 
         res.render("index", { articles });
     } catch (err) {
         return res.redirect("index");
+    }
+});
+
+// SHOW SINGLE ARTICLE
+app.get("/:slug", async (req, res) => {
+    const slug = req.params.slug;
+
+    try {
+        const article = await Article.findOne({
+            where: { slug: slug },
+        });
+
+        if (!article) {
+            return res.redirect("/");
+        }
+
+        res.render("article", { article });
+    } catch (err) {
+        return res.redirect("/");
     }
 });
 
