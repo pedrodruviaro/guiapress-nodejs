@@ -1,0 +1,53 @@
+<%- include('../../partials/head.ejs')  %> 
+
+    <body>
+        <%- include('../../partials/navbar.ejs')  %> 
+        <div class="container">
+            <h1>Artigos</h1>
+            <a href="/admin/articles/new" class="btn btn-success">Criar novo artigo</a>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th> 
+                        <th>Título</th>
+                        <th>Slug</th>
+                        <th>Categoria</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% articles.forEach(article => { %>
+
+                        <tr>
+                            <td><%= article.id %></td>
+                            <td><%= article.title %></td>
+                            <td><%= article.slug %></td>
+                            <td><%= article.categoryId %></td>
+                            <td>Ações</td>
+                        </tr>
+
+                    <% }) %> 
+                    
+                </tbody>
+            </table>
+        </div>
+    </body>
+
+
+    <!-- JS -->
+    <script>
+        function confirmDelete(event){
+            event.preventDefault();
+            const value = confirm("Você realmente quer deletar esta categoria?")
+            if(value){
+                event.target.submit()
+            } else {
+                return
+            }
+        }
+    </script>
+
+<%- include('../../partials/footer.ejs')  %>    
+</html>
