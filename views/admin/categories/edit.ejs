@@ -9,8 +9,9 @@
                     <h2>Edição de Categoria</h2>
                 </div>
                 <div class="card-body">
-                    <form action="/categories/save" method="POST">
-                        <input autofocus class="form-control mb-3" type="text" name="title" placeholder="Defina o titulo da categoria" value="<%= category.title %> ">
+                    <form action="/categories/update" method="POST">
+                        <input type="hidden" name="id" value="<%= category.id %> ">
+                        <input autofocus class="form-control mb-3" type="text" name="title" placeholder="Defina o titulo da categoria" value="<%= category.title %>">
                         <button class="btn btn-success" type="submit">Atualizar</button>
                     </form>
                 </div>

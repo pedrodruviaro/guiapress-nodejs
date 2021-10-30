@@ -58,6 +58,7 @@ router.post("/categories/delete", async (req, res) => {
 router.get("/admin/categories/edit/:id", async (req, res) => {
     const id = req.params.id;
 
+    // corrigindo pequeno comportamento do sequelize
     if (isNaN(id)) return res.redirect("/admin/categories");
 
     try {
@@ -65,9 +66,29 @@ router.get("/admin/categories/edit/:id", async (req, res) => {
 
         if (!category) return res.redirect("/admin/categories");
 
-        return res.render("admin/categories/edit.ejs", { category });
+        return res.render("admin/categories/edit", { category });
     } catch (error) {
-        return res.status(500).json(error);
+        return res.redirect("/admin/categories");
+    }
+});
+
+//salvando categoria editada
+router.post("/categories/update", async (req, res) => {
+    const { id, title } = req.body;
+
+    try {
+        await Category.update(
+            { title: title, slug: slugify(title) },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        );
+
+        res.redirect("/admin/categories");
+    } catch (error) {
+        res.redirect("/admin/categories");
     }
 });
 
