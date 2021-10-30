@@ -37,7 +37,9 @@ app.get("/", async (req, res) => {
     try {
         const articles = await Article.findAll({ order: [["id", "DESC"]] });
 
-        res.render("index", { articles });
+        const categories = await Category.findAll();
+
+        res.render("index", { articles, categories });
     } catch (err) {
         return res.redirect("index");
     }
@@ -56,7 +58,34 @@ app.get("/:slug", async (req, res) => {
             return res.redirect("/");
         }
 
-        res.render("article", { article });
+        const categories = await Category.findAll();
+
+        res.render("article", { article, categories });
+    } catch (err) {
+        return res.redirect("/");
+    }
+});
+
+// Filter by category
+app.get("/category/:slug", async (req, res) => {
+    const { slug } = req.params;
+
+    try {
+        const articlesByCategory = await Category.findOne({
+            where: {
+                slug: slug,
+            },
+            include: [{ model: Article }],
+        });
+
+        if (!articlesByCategory) return res.redirect("/");
+
+        const categories = await Category.findAll();
+
+        return res.render("index", {
+            articles: articlesByCategory.articles,
+            categories,
+        });
     } catch (err) {
         return res.redirect("/");
     }
